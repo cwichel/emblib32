@@ -8,6 +8,10 @@
 
 #define BUFF_SIZE  1024
 
+const char *TRACE_TOPIC_NAME[TOPIC_NUM] = {
+  "SYSTEM",
+};
+
 t_buff  ctrl;
 uint8_t buff[BUFF_SIZE];
 
@@ -19,11 +23,11 @@ int main(void)
   printf("\n");
   
   trace_init(TRACE_LEVEL_ALL, TRACE_TOPICS_ALL);
-  LFATAL  (TRACE_TOPIC_SYSTEM, "Hello, World!");
-  LERROR  (TRACE_TOPIC_SYSTEM, "Hello, World!");
-  LWARNING(TRACE_TOPIC_SYSTEM, "Hello, World!");
-  LINFO   (TRACE_TOPIC_SYSTEM, "Hello, World!");
-  LDEBUG  (TRACE_TOPIC_SYSTEM, "Hello, World!");
+  LFATAL  (TOPIC_SYSTEM, "Hello, World!");
+  LERROR  (TOPIC_SYSTEM, "Hello, World!");
+  LWARNING(TOPIC_SYSTEM, "Hello, World!");
+  LINFO   (TOPIC_SYSTEM, "Hello, World!");
+  LDEBUG  (TOPIC_SYSTEM, "Hello, World!");
   printf("\n");
   
   buff_init(&ctrl, buff, BUFF_SIZE, 1, BUFF_OPMODE_DEFAULT, true);

@@ -37,10 +37,6 @@ extern "C" {
 * @{
 *//*--------------------------------------------------------------------------*/
 
-#define EMBLIB32_ERROR_BUFFER_EMPTY     0x11U    /*!< Buffer is empty */
-#define EMBLIB32_ERROR_BUFFER_INDEX     0x12U    /*!< Buffer index out of bounds */
-#define EMBLIB32_ERROR_BUFFER_OVERFLOW  0x13U    /*!< Buffer overflowed */
-
 /*-------------------------------------------------------------------------*//**
 * @} <!-- End: PUBLIC_Definitions -->
 *//*-----------------------------------------------------------------------*//**

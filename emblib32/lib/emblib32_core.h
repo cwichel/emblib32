@@ -33,12 +33,18 @@ extern "C" {
 * @{
 *//*--------------------------------------------------------------------------*/
 
-/** @brief True if built from host */
-#define EMBLIB32_HOST                   defined(HOST) || defined(SIMULATOR)
+/** Host environment */
+#if defined(HOST) || defined(SIMULATOR)
+  #define EMBLIB32_HOST
+#endif
 
 /* Error codes */
 #define EMBLIB32_OK                     0x00U    /*!< No error */
 #define EMBLIB32_ERROR_PARAMETER        0x02U    /*!< Invalid parameter */
+
+#define EMBLIB32_ERROR_BUFFER_EMPTY     0x11U    /*!< Buffer is empty */
+#define EMBLIB32_ERROR_BUFFER_INDEX     0x12U    /*!< Buffer index out of bounds */
+#define EMBLIB32_ERROR_BUFFER_OVERFLOW  0x13U    /*!< Buffer overflowed */
 
 /*-------------------------------------------------------------------------*//**
 * @} <!-- End: PUBLIC_Definitions -->
@@ -50,6 +56,11 @@ extern "C" {
 /** Align 32bit */
 #ifndef ALIGN_32
   #define ALIGN_32    __attribute__ ((aligned(32)))
+#endif
+
+/** Packed implementation */
+#ifndef PACKED
+  #define PACKED      __attribute__ ((packed))
 #endif
 
 /** Weak implementation */

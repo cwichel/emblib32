@@ -164,7 +164,7 @@ uint32_t trace_set_lock(t_rtos_lock lock, void* object)
   return EMBLIB32_OK;
 }
 
-uint32_t trace(const char *name, uint8_t level, uint8_t topic, const char *file, uint32_t line, ...)
+uint32_t trace(const char *tracer, uint8_t level, uint8_t topic, const char *name, const char *file, uint32_t line, ...)
 {
   /* Validate */
   if (_trace.quiet || (level > _trace.level) || !bitmask_get(&_trace.topics, topic))
@@ -179,9 +179,9 @@ uint32_t trace(const char *name, uint8_t level, uint8_t topic, const char *file,
   va_start(args, line);
   char const* format = va_arg(args, char*);
   
-  if (name)
+  if (tracer)
   {
-    printf("%s: ", name);
+    printf("%s: ", tracer);
   }
   printf("%-7s: ", _trace_level_str[level]);
   if (file)
@@ -196,11 +196,15 @@ uint32_t trace(const char *name, uint8_t level, uint8_t topic, const char *file,
       }
       pf--;
     }
-    #if EMBLIB32_HOST
-    printf("(%s:%u) ", pf, line);
+    #ifdef EMBLIB32_HOST
+    printf("%s:%u - ", pf, line);
     #else
-    printf("(%s:%lu) ", pf, line);
+    printf("%s:%lu - ", pf, line);
     #endif
+  }
+  if (name)
+  {
+    printf("%s: ", name);
   }
   vprintf(format, args);
   printf(TRACE_EOL);

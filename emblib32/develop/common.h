@@ -40,8 +40,8 @@ extern "C" {
 /** Tracer topics (Max = 32) */
 typedef enum
 {
-  TRACE_TOPIC_SYSTEM = 0x00U,
-  TRACE_TOPIC_NUM,
+  TOPIC_SYSTEM = 0x00U,
+  TOPIC_NUM,
 } t_trace_topic;
 
 /** Tracer default level */
@@ -57,13 +57,16 @@ typedef enum
 /** Tracer name */
 #define TRACE_NAME              "EMBLIB32"
 
-/* Tracing macros */
+/** Tracer topic names */
+extern const char *TRACE_TOPIC_NAME[TOPIC_NUM];
+
+/* Tracer macros */
 #if ENABLE_TRACER == 1U
-  #define LFATAL(topic, ...)    trace(TRACE_NAME, TRACE_LEVEL_FATAL  , topic, __FILE__, __LINE__, __VA_ARGS__)
-  #define LERROR(topic, ...)    trace(TRACE_NAME, TRACE_LEVEL_ERROR  , topic, __FILE__, __LINE__, __VA_ARGS__)
-  #define LWARNING(topic, ...)  trace(TRACE_NAME, TRACE_LEVEL_WARNING, topic, __FILE__, __LINE__, __VA_ARGS__)
-  #define LINFO(topic, ...)     trace(TRACE_NAME, TRACE_LEVEL_INFO   , topic, __FILE__, __LINE__, __VA_ARGS__)
-  #define LDEBUG(topic, ...)    trace(TRACE_NAME, TRACE_LEVEL_DEBUG  , topic, __FILE__, __LINE__, __VA_ARGS__)
+  #define LFATAL(topic, ...)    trace(TRACE_NAME, TRACE_LEVEL_FATAL  , topic, TRACE_TOPIC_NAME[topic], __FILE__, __LINE__, __VA_ARGS__)
+  #define LERROR(topic, ...)    trace(TRACE_NAME, TRACE_LEVEL_ERROR  , topic, TRACE_TOPIC_NAME[topic], __FILE__, __LINE__, __VA_ARGS__)
+  #define LWARNING(topic, ...)  trace(TRACE_NAME, TRACE_LEVEL_WARNING, topic, TRACE_TOPIC_NAME[topic], __FILE__, __LINE__, __VA_ARGS__)
+  #define LINFO(topic, ...)     trace(TRACE_NAME, TRACE_LEVEL_INFO   , topic, TRACE_TOPIC_NAME[topic], __FILE__, __LINE__, __VA_ARGS__)
+  #define LDEBUG(topic, ...)    trace(TRACE_NAME, TRACE_LEVEL_DEBUG  , topic, TRACE_TOPIC_NAME[topic], __FILE__, __LINE__, __VA_ARGS__)
 #else
   #define LFATAL(...)           ( (void)0 )
   #define LERROR(...)           ( (void)0 )

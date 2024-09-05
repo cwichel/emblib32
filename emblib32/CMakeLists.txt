@@ -19,26 +19,38 @@ enable_language(ASM C)
 project(emblib32)
 
 #------------------------------------------------
+set(DEVELOP_PATH  "${CMAKE_CURRENT_SOURCE_DIR}/develop")
 set(LIB_PATH      "${CMAKE_CURRENT_SOURCE_DIR}/lib")
 set(TESTS_PATH    "${CMAKE_CURRENT_SOURCE_DIR}/tests")
 set(VENDOR_PATH   "${CMAKE_CURRENT_SOURCE_DIR}/vendor")
 
 #------------------------------------------------
+set(INCLUDES_DEVELOP
+  "${DEVELOP_PATH}"
+)
+file(GLOB_RECURSE SOURCES_DEVELOP
+  "${DEVELOP_PATH}/*.c"
+)
+
+set(INCLUDES_LIB
+    "${LIB_PATH}"
+)
 file(GLOB_RECURSE SOURCES_LIB
   "${LIB_PATH}/*.c"
 )
 
-file(GLOB_RECURSE SOURCES_VENDOR_UNITY
-  "${VENDOR_PATH}/unity/*.c"
-)
-
-include_directories(
-  "${LIB_PATH}"
+set(INCLUDES_TESTING
   "${TESTS_PATH}"
   "${VENDOR_PATH}/unity"
 )
+file(GLOB_RECURSE SOURCES_TESTING
+  "${VENDOR_PATH}/unity/*.c"
+)
 
 #------------------------------------------------
-add_executable("${PROJECT_NAME}_develop"    "${TESTS_PATH}/develop.c" ${SOURCES_LIB})
+add_executable("${PROJECT_NAME}_develop" ${SOURCES_LIB} ${SOURCES_DEVELOP})
+target_include_directories("${PROJECT_NAME}_develop" PRIVATE ${INCLUDES_LIB} ${INCLUDES_DEVELOP})
 
-add_executable("${PROJECT_NAME}_test_cobs"  "${TESTS_PATH}/test_emblib32_cobs.c" ${SOURCES_LIB} ${SOURCES_VENDOR_UNITY})
+#------------------------------------------------
+add_executable("${PROJECT_NAME}_test_cobs"  "${TESTS_PATH}/test_emblib32_cobs.c" ${SOURCES_LIB} ${SOURCES_TESTING})
+target_include_directories("${PROJECT_NAME}_test_cobs" PRIVATE ${INCLUDES_LIB} ${INCLUDES_TESTING})

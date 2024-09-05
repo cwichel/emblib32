@@ -118,23 +118,24 @@ uint32_t trace_set_topic(uint8_t topic, bool enable);
 
 /**
  * @brief Configure the trace lock function
- * @param lock    Lock function
- * @param object  Lock object
+ * @param lock Lock function
+ * @param object Lock object
  * @return Error code
  */
 uint32_t trace_set_lock(t_rtos_lock lock, void* object);
 
 /**
  * @brief Trace a message
- * @param name Name of the trace
+ * @param tracer Name of the trace
  * @param level Trace level
  * @param topic Trace topic
+ * @param name Topic name
  * @param file File name
  * @param line Line number
  * @param args Trace format and arguments
  * @return Error code
  */
-uint32_t trace(const char *name, uint8_t level, uint8_t topic, const char *file, uint32_t line, ...);
+uint32_t trace(const char *tracer, uint8_t level, uint8_t topic, const char *name, const char *file, uint32_t line, ...);
 
 /*-------------------------------------------------------------------------*//**
 * @} <!-- End: PUBLIC_API -->
