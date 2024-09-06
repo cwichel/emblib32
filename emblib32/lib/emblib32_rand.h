@@ -1,9 +1,9 @@
 /**
  *******************************************************************************
- * @file    emblib32_core.h
+ * @file    emblib32_rand.h
  * @author  Christian Wiche
  * @date    2024
- * @brief   Core definitions
+ * @brief   Random number generator utilities
  * @note    None
  * @warning None
  *******************************************************************************
@@ -13,12 +13,13 @@
  *
  *******************************************************************************
  */
-#ifndef _EMBLIB32_CORE_H_
-#define _EMBLIB32_CORE_H_
+#ifndef _EMBLIB32_RAND_H_
+#define _EMBLIB32_RAND_H_
 #ifdef  __cplusplus
 extern "C" {
 #endif
 
+#include <stdbool.h>
 #include <stdint.h>
 
 /*-------------------------------------------------------------------------*//**
@@ -26,27 +27,15 @@ extern "C" {
 * @{
 * @addtogroup Middlewares
 * @{
-* @addtogroup Core
+* @addtogroup Random
 * @{
 *//*-----------------------------------------------------------------------*//**
 * @addtogroup PUBLIC_Definitions
 * @{
 *//*--------------------------------------------------------------------------*/
 
-/** Host environment */
-#if defined(HOST) || defined(SIMULATOR)
-  #define EMBLIB32_HOST
-#endif
-
-/* Error codes */
-#define EMBLIB32_OK                     0x00U    /*!< No error */
-#define EMBLIB32_ERROR_PARAMETER        0x02U    /*!< Invalid parameter */
-
-#define EMBLIB32_ERROR_BUFFER_EMPTY     0x11U    /*!< Buffer is empty */
-#define EMBLIB32_ERROR_BUFFER_INDEX     0x12U    /*!< Buffer index out of bounds */
-#define EMBLIB32_ERROR_BUFFER_OVERFLOW  0x13U    /*!< Buffer overflowed */
-
-#define EMBLIB32_ERROR_DECODE           0x20U    /*!< Decoding failure */
+/** Default seed value */
+#define RAND_DEFAULT_SEED    0x12345678U
 
 /*-------------------------------------------------------------------------*//**
 * @} <!-- End: PUBLIC_Definitions -->
@@ -54,57 +43,6 @@ extern "C" {
 * @addtogroup PUBLIC_Macros
 * @{
 *//*--------------------------------------------------------------------------*/
-
-/** Align 32bit */
-#ifndef ALIGN_32
-  #define ALIGN_32    __attribute__ ((aligned(32)))
-#endif
-
-/** Packed implementation */
-#ifndef PACKED
-  #define PACKED      __attribute__ ((packed))
-#endif
-
-/** Weak implementation */
-#ifndef WEAK
-  #if __WIN32 && __GNUC__
-    #define WEAK      /* Not supported */
-  #elif defined(__weak)
-    #define WEAK      __weak
-  #else
-    #define WEAK      __attribute__ ((weak))
-  #endif
-#endif
-
-/** Explicitly indicates a parameter as unused */
-#ifndef UNUSED
-  #define UNUSED(x)   ((void)(x))
-#endif
-
-/** Get absolute value */
-#ifndef ABS
-  #define ABS(a)      ((a) < (0)? -(a) : (a))
-#endif
-
-/** Get minimum value between a and b */
-#ifndef MIN
-  #define MIN(a, b)   (((a) < (b)) ? (a) : (b))
-#endif
-
-/** Get maximum value between a and b */
-#ifndef MAX
-  #define MAX(a, b)   (((a) > (b)) ? (a) : (b))
-#endif
-
-/** Get sign of a value */
-#ifndef SIGN
-  #define SIGN(a)     ((a) < (0)? (-1) : (1))
-#endif
-
-/** Get the number of elements in an array */
-#ifndef ARRAY_SIZE
-  #define ARRAY_SIZE(a)  (sizeof(a) / sizeof(a[0]))
-#endif
 
 /*-------------------------------------------------------------------------*//**
 * @} <!-- End: PUBLIC_Macros -->
@@ -127,14 +65,28 @@ extern "C" {
 * @{
 *//*--------------------------------------------------------------------------*/
 
+/**
+ * @brief Initialize the random number generator
+ * @param seed Seed value
+ */
+void rand_init(uint32_t seed, bool reset);
+
+/**
+ * @brief Get a random number between the given range
+ * @param min Minimum value
+ * @param max Maximum value
+ * @return Random number
+ */
+int32_t rand_get(int32_t min, int32_t max);
+
 /*-------------------------------------------------------------------------*//**
 * @} <!-- End: PUBLIC_API -->
 *//*-----------------------------------------------------------------------*//**
 * @} <!-- End: EmbLib32 -->
 * @} <!-- End: Middlewares -->
-* @} <!-- End: Core -->
+* @} <!-- End: Random -->
 *//*--------------------------------------------------------------------------*/
 #ifdef  __cplusplus
 }
 #endif
-#endif /* _EMBLIB32_CORE_H_ */
+#endif /* _EMBLIB32_RAND_H_ */
