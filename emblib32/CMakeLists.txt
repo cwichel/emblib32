@@ -52,5 +52,11 @@ add_executable("${PROJECT_NAME}_develop" ${SOURCES_LIB} ${SOURCES_DEVELOP})
 target_include_directories("${PROJECT_NAME}_develop" PRIVATE ${INCLUDES_LIB} ${INCLUDES_DEVELOP})
 
 #------------------------------------------------
+add_executable("${PROJECT_NAME}_test_bitmask"  "${TESTS_PATH}/test_emblib32_bitmask.c" ${SOURCES_LIB} ${SOURCES_TESTING})
+target_include_directories("${PROJECT_NAME}_test_bitmask" PRIVATE ${INCLUDES_LIB} ${INCLUDES_TESTING})
+
+add_executable("${PROJECT_NAME}_test_buffer"  "${TESTS_PATH}/test_emblib32_buffer.c" ${SOURCES_LIB} ${SOURCES_TESTING})
+target_include_directories("${PROJECT_NAME}_test_buffer" PRIVATE ${INCLUDES_LIB} ${INCLUDES_TESTING})
+
 add_executable("${PROJECT_NAME}_test_cobs"  "${TESTS_PATH}/test_emblib32_cobs.c" ${SOURCES_LIB} ${SOURCES_TESTING})
 target_include_directories("${PROJECT_NAME}_test_cobs" PRIVATE ${INCLUDES_LIB} ${INCLUDES_TESTING})

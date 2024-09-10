@@ -1,6 +1,6 @@
 /**
  *******************************************************************************
- * @file    test_emblib32_cobs.h
+ * @file    test_emblib32_cobs.c
  * @author  Christian Wiche
  * @date    2024
  * @brief   COBS (Consistent Overhead Byte Stuffing) testing
@@ -17,6 +17,7 @@
 #include "emblib32_core.h"
 #include "emblib32_rand.h"
 #include "emblib32_trace.h"
+
 #include "unity.h"
 
 /*-------------------------------------------------------------------------*//**
